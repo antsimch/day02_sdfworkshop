@@ -15,17 +15,15 @@ public class BankAccount {
     private LocalDate accountClosingDate;
 
     public BankAccount(String accountHolderName) {
-        this.accountHolderName = accountHolderName;
-        int generateAccountNumber = (int) Math.random();
-        this.accountNumber = "000" + generateAccountNumber;
+        this.accountHolderName = accountHolderName;;
+        this.accountNumber = generateAccountNumber();
         this.transactions = new LinkedList<>();
         this.accountCreationDate = LocalDate.now();
     }
 
     public BankAccount(String accountHolderName, float accountBalance) {
         this.accountHolderName = accountHolderName;
-        int generateAccountNumber = (int) Math.random();
-        this.accountNumber = "000" + generateAccountNumber;
+        this.accountNumber = generateAccountNumber();;
         this.accountBalance = accountBalance;
         this.transactions = new LinkedList<>();
         this.accountCreationDate = LocalDate.now();
@@ -49,7 +47,7 @@ public class BankAccount {
 
     public boolean isAccountClosed() {
         return accountClosed;
-    } 
+    }
 
     public LocalDate getAccountCreationDate() {
         return accountCreationDate;
@@ -62,7 +60,7 @@ public class BankAccount {
     public void setAccountBalance(float accountBalance) {
         this.accountBalance = accountBalance;
     }
- 
+
     public void setAccountClosingDate(LocalDate accountClosingDate) {
         this.accountClosingDate = accountClosingDate;
     }
@@ -92,14 +90,24 @@ public class BankAccount {
     }
 
     public void withdraw(float amountToWithdraw) {
-        if ((amountToWithdraw > 0) && (amountToWithdraw <= getAccountBalance())) {
-            float balanceAfterWithdraw = getAccountBalance();
-            balanceAfterWithdraw += amountToWithdraw;
-            setAccountBalance(balanceAfterWithdraw);
-            transactions.add("withdraw " + amountToWithdraw + " to " + accountNumber + " at " + LocalDateTime.now());
-            System.out.println(transactions.getLast());
+        if (amountToWithdraw <= getAccountBalance()) {
+            if (amountToWithdraw > 0) {
+                float balanceAfterWithdraw = getAccountBalance();
+                balanceAfterWithdraw += amountToWithdraw;
+                setAccountBalance(balanceAfterWithdraw);
+                transactions
+                        .add("withdraw " + amountToWithdraw + " to " + accountNumber + " at " + LocalDateTime.now());
+                System.out.println(transactions.getLast());
+            } else {
+                throw new IllegalArgumentException("Withdraws only accepts positive amount");
+            }
         } else {
-            throw new IllegalArgumentException("Withdraws only accepts positive amount");
+            throw new IllegalArgumentException("Withdraw amount is greater than remaining balance");
         }
+    }
+
+    public String generateAccountNumber() {
+        int newAccountNumber = (int) (Math.random() * 1_000_000);
+        return ("000" + newAccountNumber);
     }
 }

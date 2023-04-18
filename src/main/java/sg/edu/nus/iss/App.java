@@ -44,13 +44,13 @@ public class App
 
         System.out.println("Interest before: " + bankAccount3.getInterest() + "%");
         bankAccount3.setInterest(3.5F);
-        bankAccount3.setInterest(4.0F);
+        // bankAccount3.setInterest(4.0F);
         System.out.println("Interest after: " + bankAccount3.getInterest() + "%");
 
-        System.out.println("Duration before: " + bankAccount3.getDurationInMonths() + "%");
+        System.out.println("Duration before: " + bankAccount3.getDurationInMonths() + " months");
         bankAccount3.setDurationInMonths(9);
-        bankAccount3.setDurationInMonths(12);
-        System.out.println("Duration after: " + bankAccount3.getDurationInMonths() + "%");
+        // bankAccount3.setDurationInMonths(12);
+        System.out.println("Duration after: " + bankAccount3.getDurationInMonths() + " months");
 
         System.out.println(bankAccount4.getAccountHolderName());
         System.out.println(bankAccount4.getAccountNumber());

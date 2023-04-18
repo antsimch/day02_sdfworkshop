@@ -88,4 +88,14 @@ public class FixedDepositAccount extends BankAccount {
     public void setDurationInMonthsChanged(boolean durationInMonthsChanged) {
             this.durationInMonthsChanged = durationInMonthsChanged;
     } 
+
+    @Override
+    public void deposit(float amountToDeposit) {
+        System.out.println("You cannot deposit into Fixed Deposit Account");
+    }
+
+    @Override
+    public void withdraw(float amountToDeposit) {
+        System.out.println("You cannot withdraw from Fixed Deposit Account");
+    }
 }

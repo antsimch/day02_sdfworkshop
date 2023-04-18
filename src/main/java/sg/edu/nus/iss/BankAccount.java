@@ -2,30 +2,32 @@ package sg.edu.nus.iss;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.LinkedList;
 
 public class BankAccount {
 
     private final String accountHolderName;
     private final String accountNumber;
     private float accountBalance;
-    private List<String> transactions;
+    private LinkedList<String> transactions;
     private boolean accountClosed = false;
     private LocalDate accountCreationDate;
     private LocalDate accountClosingDate;
 
     public BankAccount(String accountHolderName) {
         this.accountHolderName = accountHolderName;
-        double generateAccountNumber = Math.random();
-        this.accountNumber = "" + generateAccountNumber;
+        int generateAccountNumber = (int) Math.random();
+        this.accountNumber = "000" + generateAccountNumber;
+        this.transactions = new LinkedList<>();
         this.accountCreationDate = LocalDate.now();
     }
 
     public BankAccount(String accountHolderName, float accountBalance) {
         this.accountHolderName = accountHolderName;
-        double generateAccountNumber = Math.random();
-        this.accountNumber = "" + generateAccountNumber;
+        int generateAccountNumber = (int) Math.random();
+        this.accountNumber = "000" + generateAccountNumber;
         this.accountBalance = accountBalance;
+        this.transactions = new LinkedList<>();
         this.accountCreationDate = LocalDate.now();
     }
 
@@ -41,7 +43,7 @@ public class BankAccount {
         return accountBalance;
     }
 
-    public List<String> getTransactions() {
+    public LinkedList<String> getTransactions() {
         return transactions;
     }
 
@@ -60,9 +62,21 @@ public class BankAccount {
     public void setAccountBalance(float accountBalance) {
         this.accountBalance = accountBalance;
     }
+ 
+    public void setAccountClosingDate(LocalDate accountClosingDate) {
+        this.accountClosingDate = accountClosingDate;
+    }
 
     public void setAccountClosed(boolean accountClosed) {
         this.accountClosed = accountClosed;
+        setAccountClosingDate(LocalDate.now());
+    }
+
+    @Override
+    public String toString() {
+        return "BankAccount [accountHolderName=" + accountHolderName + ", accountNumber=" + accountNumber
+                + ", accountBalance=" + accountBalance + ", accountClosed=" + accountClosed + ", accountCreationDate="
+                + accountCreationDate + ", accountClosingDate=" + accountClosingDate + "]";
     }
 
     public void deposit(float amountToDeposit) {
@@ -70,18 +84,20 @@ public class BankAccount {
             float balanceAfterDeposit = getAccountBalance();
             balanceAfterDeposit += amountToDeposit;
             setAccountBalance(balanceAfterDeposit);
-            System.out.println("deposit " + amountToDeposit + " " + LocalDateTime.now());
+            transactions.add("deposit " + amountToDeposit + " to " + accountNumber + " at " + LocalDateTime.now());
+            System.out.println(transactions.getLast());
         } else {
             throw new IllegalArgumentException("Deposits only accepts positive amount");
         }
     }
 
     public void withdraw(float amountToWithdraw) {
-        if (amountToWithdraw > 0) {
+        if ((amountToWithdraw > 0) && (amountToWithdraw <= getAccountBalance())) {
             float balanceAfterWithdraw = getAccountBalance();
             balanceAfterWithdraw += amountToWithdraw;
             setAccountBalance(balanceAfterWithdraw);
-            System.out.println("withdraw " + amountToWithdraw + " " + LocalDateTime.now());
+            transactions.add("withdraw " + amountToWithdraw + " to " + accountNumber + " at " + LocalDateTime.now());
+            System.out.println(transactions.getLast());
         } else {
             throw new IllegalArgumentException("Withdraws only accepts positive amount");
         }

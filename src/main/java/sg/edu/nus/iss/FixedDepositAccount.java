@@ -10,7 +10,6 @@ public class FixedDepositAccount extends BankAccount {
 
     public FixedDepositAccount(String accountHolderName, float accountBalance) {
         super(accountHolderName, accountBalance);
-        this.balanceSet = true;
         setBalanceSet(true);
     }
 

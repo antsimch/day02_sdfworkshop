@@ -94,7 +94,7 @@ public class FixedDepositAccount extends BankAccount {
     }
 
     @Override
-    public void withdraw(float amountToDeposit) {
+    public void withdraw(float amountToWithdraw) {
         System.out.println("You cannot withdraw from Fixed Deposit Account");
     }
 }
